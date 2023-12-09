@@ -170,3 +170,50 @@ if (test2result.Results.length == 1) {
   console.log('Expected:', twentyLeaguesOut.Results.length);
   console.log('Received:', test2result.Results.length);
 }
+
+/** check if result the capitazation is taken into account as different terms */
+const test3Result = findSearchTermInBooks('Eyes', twentyLeaguesIn);
+const test3ExpectedResult = {
+  SearchTerm: 'Eyes',
+  Results: [],
+};
+if (JSON.stringify(test3Result) === JSON.stringify(test3ExpectedResult)) {
+  console.log('PASS: Test 3 (Capitalization is taken into account)');
+} else {
+  console.log('FAIL: Test 3');
+  console.log('Expected:', twentyLeaguesOut.Results.length);
+  console.log('Received:', test3ExpectedResult.Results.length);
+}
+
+/** check if the results contains at least, the search term if no matches are found
+ *  or there are no books to search
+ */
+const test4Term = 'Romeo';
+const test4Result = findSearchTermInBooks(test4Term, twentyLeaguesIn);
+if (test4Term === test4Result.SearchTerm) {
+  console.log('PASS: Test 4 (Result should contain at least the search term)');
+} else {
+  console.log('FAIL: Test 4');
+  console.log('Expected:', test4Term);
+  console.log('Received:', test4Result.SearchTerm);
+}
+
+/** search if it doesn't only work with words */
+const test5Result = findSearchTermInBooks('now simply went', twentyLeaguesIn);
+const test5ExpectedResult = {
+  SearchTerm: 'now simply went',
+  Results: [
+    {
+      ISBN: '9780000528531',
+      Page: 31,
+      Line: 8,
+    },
+  ],
+};
+if (JSON.stringify(test5Result) === JSON.stringify(test5ExpectedResult)) {
+  console.log('PASS: Test 5 (Function should not only consider words)');
+} else {
+  console.log('FAIL: Test 5');
+  console.log('Expected:', test5ExpectedResult.Results);
+  console.log('Received:', test5Result.Results);
+}
